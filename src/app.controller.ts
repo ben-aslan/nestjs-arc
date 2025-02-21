@@ -1,4 +1,4 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { BadGatewayException, BadRequestException, Controller, Delete, Get, HttpCode, HttpStatus, Inject, Post, Put, Res } from '@nestjs/common';
 import IUserService from './services/abstract/iUserService';
 import { Types } from 'mongoose';
 import { delay } from 'rxjs';
@@ -8,8 +8,31 @@ export class AppController {
   constructor(private readonly userService: IUserService) { }
 
   @Get()
-  async getHello(): Promise<string> {
+  async getUser() {
+    return {
+      success: true,
+      data: await this.userService.getUser({ name: "sdf" })
+    }
+  }
+
+  @Post()
+  async addUser() {
     await this.userService.addUser({ name: "sdf", _id: new Types.ObjectId(), __v: 0 })
-    return 'success'
+    return {
+      success: true
+    }
+  }
+
+  @Put()
+  async updateUser() {
+    await this.userService.updateUser({ name: "sdf" }, { $set: { name: "sdf" } })
+    return {
+      success: true
+    }
+  }
+
+  @Delete()
+  async deleteUser() {
+    await this.userService.deleteUser({ name: "sdf" })
   }
 }
