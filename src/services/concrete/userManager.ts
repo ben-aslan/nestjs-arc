@@ -1,16 +1,17 @@
-import { RootFilterQuery, UpdateQuery, UpdateWithAggregationPipeline } from "mongoose";
-// import LogAspect from "../../aspects/logAspect";
+import { RootFilterQuery, Types, UpdateQuery, UpdateWithAggregationPipeline, Document } from "mongoose";
 import IUserDal from "../../db/abstract/iUserDal";
 import User from "../../models/user";
-// import useAspect from "../../utils/aspects/aspectAttribute";
 import IUserService from "../abstract/iUserService";
 import { Injectable } from "@nestjs/common";
-// import SecurityAspect from "../../aspects/securityAspect";
 
 @Injectable()
 class UserManager implements IUserService {
 
     constructor(private readonly userDal: IUserDal) {
+    }
+
+    async getUser(filter?: RootFilterQuery<User> | undefined): Promise<(Document<unknown, {}, User> & User & Required<{ _id: Types.ObjectId; }> & { __v: number; }) | null> {
+        return await this.userDal.findOne(filter)
     }
 
     // @useAspect([new LogAspect('(userManager.updateUser)'), new SecurityAspect()])
