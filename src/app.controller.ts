@@ -1,13 +1,15 @@
-import { BadGatewayException, BadRequestException, Controller, Delete, Get, HttpCode, HttpStatus, Inject, Post, Put, Res } from '@nestjs/common';
+import { BadGatewayException, BadRequestException, Controller, Delete, Get, HttpCode, HttpStatus, Inject, Post, Put, Res, UseInterceptors } from '@nestjs/common';
 import IUserService from './services/abstract/iUserService';
 import { Types } from 'mongoose';
 import { delay } from 'rxjs';
+import SecurityAspect from './aspects/securityAspect';
 
 @Controller()
 export class AppController {
   constructor(private readonly userService: IUserService) { }
 
   @Get()
+  @UseInterceptors(new SecurityAspect(['admin']))
   async getUser() {
     return {
       success: true,
@@ -17,7 +19,7 @@ export class AppController {
 
   @Post()
   async addUser() {
-    await this.userService.addUser({ name: "sdf", _id: new Types.ObjectId(), __v: 0 })
+    await this.userService.addUser({ name: "sdf", _id: new Types.ObjectId(),password:'pass', __v: 0 })
     return {
       success: true
     }
