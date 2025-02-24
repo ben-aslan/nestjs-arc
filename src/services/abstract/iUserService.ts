@@ -1,5 +1,5 @@
 import mongoose, { RootFilterQuery, Types, Document } from "mongoose"
-import User from "../../models/user"
+import User from "../../models/concrete/user"
 
 abstract class IUserService {
     abstract getUser(filter?: RootFilterQuery<User> | undefined): Promise<(Document<unknown, {}, User> & User & Required<{ _id: Types.ObjectId; }> & { __v: number; }) | null>
