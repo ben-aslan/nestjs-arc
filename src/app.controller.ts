@@ -2,14 +2,12 @@ import { BadGatewayException, BadRequestException, Controller, Delete, Get, Http
 import IUserService from './services/abstract/iUserService';
 import { Types } from 'mongoose';
 import { delay } from 'rxjs';
-import SecurityAspect from './aspects/securityAspect';
 
 @Controller()
 export class AppController {
   constructor(private readonly userService: IUserService) { }
 
   @Get()
-  @UseInterceptors(new SecurityAspect(['admin']))
   async getUser() {
     return {
       success: true,
