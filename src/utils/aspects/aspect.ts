@@ -2,6 +2,7 @@ import { CallHandler, ExecutionContext, HttpException, HttpStatus, NestIntercept
 import { catchError, EMPTY, Observable, tap, finalize } from "rxjs"
 
 abstract class Aspect implements NestInterceptor {
+    httpException: HttpException
     constructor() {
 
     }
@@ -16,7 +17,7 @@ abstract class Aspect implements NestInterceptor {
             catchError((err) => {
                 isSuccess = false
                 this.onException(err, context, next)
-                throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+                throw err;
             }),
             finalize(() => {
                 this.onAfter(context, next)
