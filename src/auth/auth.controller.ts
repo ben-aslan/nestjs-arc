@@ -16,7 +16,7 @@ export class AuthController {
     }
 
     @Get('status')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(new JwtAuthGuard(['admin']))
     async status(@Req() req) {
         return { success: true, token: req.user }
     }
