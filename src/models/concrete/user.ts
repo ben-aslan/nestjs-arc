@@ -1,12 +1,10 @@
 import { Types } from "mongoose"
-
-interface IEntity {
-
-}
+import IEntity from "../abstract/iEntity"
 
 interface User extends IEntity {
     _id: Types.ObjectId | undefined
     name: string
+    password: string
     __v: number
 }
 

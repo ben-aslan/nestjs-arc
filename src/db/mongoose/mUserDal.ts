@@ -1,5 +1,5 @@
 import mongoose, { Mongoose } from "mongoose";
-import User from "../../models/user";
+import User from "../../models/concrete/user";
 import MEntityRepository from "./mEntityRepository";
 import { userModel } from "./context/mongooseContext";
 import IUserDal from "../abstract/iUserDal";
